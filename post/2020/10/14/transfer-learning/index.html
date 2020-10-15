@@ -53,7 +53,7 @@
 
   <article class="article">
     
-    <span class="article-duration">1 min read</span>
+    <span class="article-duration">3 min read</span>
     
 
     <h1 class="article-title">Transfer Learning Notes</h1>
@@ -84,6 +84,21 @@ the condition
 <code>$\mathbb{T}_s \neq \mathbb{T}_t$</code>
 implies that either <code>$\mathscr{Y}_s \neq \mathscr{Y}_t$</code> or <code>$\mathbb{P}^{Y_s|X_s} \neq \mathbb{P}^{Y_t|X_t}$</code>.</p>
 <p>When the target domain and the source domain are the same,that is, <code>$\mathbb{D}_s = \mathbb{D}_t$</code>, and their learning tasks are the same, that is, <code>$\mathbb{T}_s = \mathbb{T}_t$</code>, the learning problem becomes a traditional machine learning problem.</p>
+<p>Given such scenario, the objective of transfer learning algorithm is to improve the learning of the target predictive function <code>$f(\cdot)$</code>
+for <code>$\mathbb{D}_t$</code> using the knowledge in <code>$\mathbb{D}_s$</code> and <code>$\mathbb{T}_s$</code>. If there is some overlap in the feature space between the domains and the label space are identical
+(i.e. <code>$\mathscr{X}_s \cap \mathscr{X}_t \neq \varnothing$</code> and <code>$\mathscr{Y}_s = \mathscr{Y}_t$</code>), but the marginal or the conditional probability distributions are dissimilar
+(<code>$\mathbb{P}^{X_s} \neq \mathbb{P}^{X_t}$</code> or <code>$\mathbb{P}^{Y_s|X_s} \neq \mathbb{P}^{Y_t|X_t}$</code>), the problem is categorized as <strong>homogeneous transfer</strong>. On the other hand, if there is no overlap between the feature spaces or the label spaces are not of similar (i.e. <code>$\mathscr{X}_s \cap \mathscr{X}_t = \varnothing$</code> or <code>$\mathscr{Y}_s \neq \mathscr{Y}_t$</code>), the problem is categorized as <strong>heterogeneous transfer</strong>.
+As we can see, these inter-domain and inter-task discrepancies can give us a number of scenarios:</p>
+<ul>
+<li>The domains are similar but the tasks are different (<code>$\mathbb{D}_s = \mathbb{D}_t$</code> but <code>$\mathbb{T}_s \neq \mathbb{T}_t$</code>), for example, when we have ADL data from a few persons on 4 activities, but asked to classify samples of the same persons' containing a new activity previously unseen during training. This falls under <strong>inductive transfer learning</strong>.</li>
+<li>The tasks are similar but domains are different (<code>$\mathbb{D}_s \neq \mathbb{D}_t$</code> but <code>$\mathbb{T}_s = \mathbb{T}_t$</code>), one example of this case is the classical transfer learning scenario where we want transfer persons, devices, body positions etc, assuming that the label space remains same. This is more specifically called <strong>transductive transfer learning</strong> or <strong>domain adaptation</strong>.</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>Both domains and the tasks are related but dissimilar (<code>$\mathbb{D}_s \neq \mathbb{D}_t$</code> and <code>$\mathbb{T}_s \neq \mathbb{T}_t$</code>); this is one of the most challenging scenarios and have not been greatly been explored in the literature. This is called purely <strong>unsupervised transfer learning</strong>.</li>
+</ul>
+<!-- raw HTML omitted -->
+<p><img src="/da.png" alt="Example image"></p>
 <!-- raw HTML omitted -->
 <!-- raw HTML omitted -->
 
