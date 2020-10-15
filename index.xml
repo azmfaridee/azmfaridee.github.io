@@ -5,19 +5,7 @@
     <link>https://azmfaridee.github.io/</link>
     <description>Recent content on Random Notes!</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <lastBuildDate>Wed, 14 Oct 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://azmfaridee.github.io/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Transfer Learning Notes</title>
-      <link>https://azmfaridee.github.io/post/2020/10/14/transfer-learning/</link>
-      <pubDate>Wed, 14 Oct 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://azmfaridee.github.io/post/2020/10/14/transfer-learning/</guid>
-      <description>Label, Domain and Tasks: A Definition A domain $\mathbb{D}$ consists of:
- a feature space $\mathscr{X}$ and a marginal probability distribution $\mathbb{P}^X$, where each input instance $x \in \mathscr{X}$.  Two domains are different when they have different feature space or different marginal probability distributions. Given a specific domain $\mathbb{D} = \{\mathscr{X}, \mathbb{P}^X\}$, a task, $\mathbb{T}$ consists of two components:
- a label space $\mathscr{Y}$ and a function $f(\cdot)$.  Therefore, $\mathbb{T} = \{\mathscr{Y}, f(\cdot)\}$.</description>
-    </item>
-    
+    <language>en-us</language><atom:link href="https://azmfaridee.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>About Me</title>
       <link>https://azmfaridee.github.io/about/</link>
