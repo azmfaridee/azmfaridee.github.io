@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Hugo 0.76.5" />
+
+
+<title>Transfer Learning Notes - Random Notes!</title>
+<meta property="og:title" content="Transfer Learning Notes - Random Notes!">
+
+
+
+
+  
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/fonts.css" media="all">
+<link rel="stylesheet" href="/css/main.css" media="all">
+
+
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <nav class="nav">
+    <a href="/%20/%20" class="nav-logo">
+        
+    </a>
+
+    <ul class="nav-links">
+        
+        <li><a href="/">Home</a></li>
+        
+        <li><a href="/about/">About</a></li>
+        
+        <li><a href="http://github.com/azmfaridee">GitHub</a></li>
+        
+        <li><a href="http://twitter.com/azmfaridee">Twitter</a></li>
+        
+    </ul>
+</nav>
+      </header>
+
+
+<main class="content" role="main">
+
+  <article class="article">
+    
+    <span class="article-duration">3 min read</span>
+    
+
+    <h1 class="article-title">Transfer Learning Notes</h1>
+
+    
+    <span class="article-date">2020-10-15</span>
+    
+
+    <div class="article-content">
+      
+<script src="index_files/header-attrs/header-attrs.js"></script>
+
+<div id="TOC">
+<ul>
+<li><a href="#label-domain-and-tasks-a-definition">Label, Domain and Tasks: A Definition</a></li>
+<li><a href="#domain-adaptation-and-transfer-learning">Domain Adaptation and Transfer Learning</a></li>
+<li><a href="#references">References</a></li>
+</ul>
+</div>
+
+<div id="label-domain-and-tasks-a-definition" class="section level1">
+<h1>Label, Domain and Tasks: A Definition</h1>
+<p>Here is a brief definition of <strong>label</strong>, <strong>domain</strong> and the <strong>tasks</strong> <span class="citation">(Yang et al. <a href="#ref-yang2020transfer" role="doc-biblioref">2020</a>)</span>.</p>
+<p>A <strong>domain</strong> <code>$\mathbb{D}$</code> consists of:</p>
+<ul>
+<li>a feature space <code>$\mathscr{X}$</code> and</li>
+<li>a marginal probability distribution <code>$\mathbb{P}^X$</code>, where each input instance <code>$x \in \mathscr{X}$</code>.</li>
+</ul>
+<p>Two <strong>domains</strong> are different when they have different feature space or different marginal probability distributions. Given a specific <strong>domain</strong> <code>$\mathbb{D} = \{\mathscr{X}, \mathbb{P}^X\}$</code>, a <strong>task</strong>, <code>$\mathbb{T}$</code> consists of two components:</p>
+<ul>
+<li>a label space <code>$\mathscr{Y}$</code> and</li>
+<li>a function <code>$f(\cdot)$</code>.</li>
+</ul>
+<p>Therefore, <code>$\mathbb{T} = \{\mathscr{Y}, f(\cdot)\}$</code>. The function <code>$f(\cdot)$</code> is a predictive function that can be used to make prediction on unseen instances, <code>$\{x^*\}$</code>.</p>
+<p>From a probabilistic perspective <code>$f(\cdot)$</code> can be written as <code>$P(y|x)$</code> where <code>$y \in \mathscr{Y}$</code>.
+Given a source domain <code>$\mathbb{D}_s$</code> and a target domain <code>$\mathbb{D}_t$</code>
+the condition <code>$\mathbb{D}_s \neq \mathbb{D}_t$</code> implies that either <code>$\mathscr{X}_s \neq \mathscr{X}_t$</code> or <code>$\mathbb{P}^{X_s} \neq \mathbb{P}^{X_t}$</code>. Similarly, given source task <code>$\mathbb{T}_s$</code> and target task <code>$\mathbb{T}_t$</code>,
+the condition
+<code>$\mathbb{T}_s \neq \mathbb{T}_t$</code>
+implies that either <code>$\mathscr{Y}_s \neq \mathscr{Y}_t$</code> or <code>$\mathbb{P}^{Y_s|X_s} \neq \mathbb{P}^{Y_t|X_t}$</code>.</p>
+</div>
+<div id="domain-adaptation-and-transfer-learning" class="section level1">
+<h1>Domain Adaptation and Transfer Learning</h1>
+<p>When the target domain and the source domain are the same,that is, <code>$\mathbb{D}_s = \mathbb{D}_t$</code>, and their learning tasks are the same, that is, <code>$\mathbb{T}_s = \mathbb{T}_t$</code>, the learning problem becomes a traditional machine learning problem.</p>
+<p>Given such scenario, the objective of transfer learning algorithm is to improve the learning of the target predictive function <code>$f(\cdot)$</code>
+for <code>$\mathbb{D}_t$</code> using the knowledge in <code>$\mathbb{D}_s$</code> and <code>$\mathbb{T}_s$</code>. If there is some overlap in the feature space between the domains and the label space are identical
+(i.e. <code>$\mathscr{X}_s \cap \mathscr{X}_t \neq \varnothing$</code> and <code>$\mathscr{Y}_s = \mathscr{Y}_t$</code>), but the marginal or the conditional probability distributions are dissimilar
+(<code>$\mathbb{P}^{X_s} \neq \mathbb{P}^{X_t}$</code> or <code>$\mathbb{P}^{Y_s|X_s} \neq \mathbb{P}^{Y_t|X_t}$</code>), the problem is categorized as <strong>homogeneous transfer</strong>. On the other hand, if there is no overlap between the feature spaces or the label spaces are not of similar (i.e. <code>$\mathscr{X}_s \cap \mathscr{X}_t = \varnothing$</code> or <code>$\mathscr{Y}_s \neq \mathscr{Y}_t$</code>), the problem is categorized as <strong>heterogeneous transfer</strong>.
+As we can see, these inter-domain and inter-task discrepancies can give us a number of scenarios:</p>
+<ul>
+<li>The domains are similar but the tasks are different (<code>$\mathbb{D}_s = \mathbb{D}_t$</code> but <code>$\mathbb{T}_s \neq \mathbb{T}_t$</code>), for example, when we have ADL data from a few persons on 4 activities, but asked to classify samples of the same persons’ containing a new activity previously unseen during training. This falls under <strong>inductive transfer learning</strong> <span class="citation">(Redko et al. <a href="#ref-redko2020survey" role="doc-biblioref">2020</a>)</span>.</li>
+<li>The tasks are similar but domains are different (<code>$\mathbb{D}_s \neq \mathbb{D}_t$</code> but <code>$\mathbb{T}_s = \mathbb{T}_t$</code>), one example of this case is the classical transfer learning scenario where we want transfer persons, devices, body positions etc, assuming that the label space remains same. This is more specifically called <strong>transductive transfer learning</strong> or <strong>domain adaptation</strong>.
+<!-- Most existing SOTA domain adaptation techniques only transfer between a pair of domains making them unsuitable when multiple domain discrepancies are encountered. --></li>
+<li>Both domains and the tasks are related but dissimilar (<code>$\mathbb{D}_s \neq \mathbb{D}_t$</code> and <code>$\mathbb{T}_s \neq \mathbb{T}_t$</code>); this is one of the most challenging scenarios and have not been greatly been explored in the literature. This is called purely <strong>unsupervised transfer learning</strong>.</li>
+</ul>
+<!-- For example, if we have a large collection of motion data collected at different games (basketball, football, baseball), how does that help to classify some motion data collected at a game of volleyball? If factors such as sensor placement and personal variability is controlled (to bring `$\mathbb{D}_s$ and $\mathbb{D}_t$` closer), how much transfer is possible? -->
+<div class="figure">
+<img src="/da.png" alt="" />
+<p class="caption"><strong>Figure 1</strong>: <em>Comparison of standard supervised learning, transfer learning, and positioning of the domain adaptation.</em> <span class="citation">(Redko et al. <a href="#ref-redko2020survey" role="doc-biblioref">2020</a>)</span></p>
+</div>
+</div>
+<div id="references" class="section level1 unnumbered">
+<h1>References</h1>
+<div id="refs" class="references hanging-indent">
+<div id="ref-redko2020survey">
+<p>Redko, Ievgen, Emilie Morvant, Amaury Habrard, Marc Sebban, and Younès Bennani. 2020. “A Survey on Domain Adaptation Theory: Learning Bounds and Theoretical Guarantees.” <a href="http://arxiv.org/abs/2004.11829">http://arxiv.org/abs/2004.11829</a>.</p>
+</div>
+<div id="ref-yang2020transfer">
+<p>Yang, Qiang, Yu Zhang, Wenyuan Dai, and Sinno Jialin Pan. 2020. <em>Transfer Learning</em>. Cambridge University Press.</p>
+</div>
+</div>
+</div>
+
+    </div>
+  </article>
+
+  
+
+
+</main>
+
+      <footer class="footer">
+        <ul class="footer-links">
+          <li>
+            <a href="/index.xml" type="application/rss+xml" target="_blank">RSS feed</a>
+          </li>
+          <li>
+            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="/images/hugo-logo.png" alt="Img link to Hugo website" width="22" height="22"></a>
+          </li>
+        </ul>
+      </footer>
+
+    </div>
+    
+
+    
+<script src="/js/math-code.js"></script>
+<script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+
+    
+  </body>
+</html>
+
