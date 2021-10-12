@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Hugo 0.88.1" />
+
+
+<title>ML Notes - Random Notes!</title>
+<meta property="og:title" content="ML Notes - Random Notes!">
+
+
+  <link href='https://azmfaridee.github.io/favicon.ico' rel='icon' type='image/x-icon'/>
+
+
+
+  
+
+
+
+
+
+
+
+
+<link href='//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css' rel='stylesheet' type='text/css' />
+
+
+
+<link rel="stylesheet" href="/css/fonts.css" media="all">
+<link rel="stylesheet" href="/css/main.css" media="all">
+
+<link rel="stylesheet" href="/css/custom.css">
+
+
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <nav class="nav">
+    <a href="/%20/%20" class="nav-logo">
+        
+    </a>
+
+    <ul class="nav-links">
+        
+        <li><a href="/">Blog</a></li>
+        
+        <li><a href="/about/">About</a></li>
+        
+        <li><a href="http://github.com/azmfaridee">GitHub</a></li>
+        
+        <li><a href="http://twitter.com/azmfaridee">Twitter</a></li>
+        
+        <li><a href="https://www.linkedin.com/in/azmfaridee/">LinkedIn</a></li>
+        
+        <li><a href="https://medium.com/@azmfaridee">Medium</a></li>
+        
+    </ul>
+</nav>
+      </header>
+
+
+<main class="content" role="main">
+
+  <article class="article">
+    
+    <span class="article-duration">2 min read</span>
+    
+
+    <h1 class="article-title">ML Notes</h1>
+
+    
+    <span class="article-date">2020-10-19</span>
+    
+
+    <div class="article-content">
+      
+<script src="https://azmfaridee.github.io/post/2020/10/19/ml-notes/index_files/header-attrs/header-attrs.js"></script>
+
+<div id="TOC">
+<ul>
+<li><a href="#knn-from-scratch">KNN From Scratch</a>
+<ul>
+<li><a href="#speeding-up-multiple-test-cases">Speeding Up Multiple Test Cases</a></li>
+</ul></li>
+</ul>
+</div>
+
+<div id="knn-from-scratch" class="section level1">
+<h1>KNN From Scratch</h1>
+<p>I have often been asked to implement a KNN classifier in a few interviews so I thought I’d write down my simplest implementation on MNIST and talk about various ways we can speed it up.</p>
+<p>First off, import our python libraries</p>
+<pre class="python"><code>import mnist
+import numpy as np
+from scipy.stats import mode
+from sklearn.metrics import accuracy_score</code></pre>
+<p>Now load up MNIST dataset and do some pre-processing (normalize and flatten).</p>
+<pre class="python"><code>X, y = mnist.train_images(), mnist.train_labels()
+Xt, yt = mnist.test_images(), mnist.test_labels()
+
+# normalize
+mu = X.mean()
+sigma = X.std()
+X = (X - mu) / sigma
+Xt = (Xt - mu) / sigma
+
+# flatten
+X = X.reshape(-1, 28*28)
+Xt = Xt.reshape(-1, 28*28)</code></pre>
+<p>Implementing KNN for a single test datapoint is very simple.</p>
+<ol style="list-style-type: decimal">
+<li>Calculate the distance from the test datapoint to all the training datapoints</li>
+<li>Sort distance values and take top <code>$k$</code> training points</li>
+<li>Take the <strong>mode</strong> of the corresponding labels as the output class label.</li>
+</ol>
+<p>In our MNIST example, we use <strong>euclidean distance</strong> or <strong>L2/Frobenius-norm</strong> as the distance measure.</p>
+<pre class="python"><code>def knn_single(X, y, Xt, k=5):
+    dist = np.sum((X - Xt)**2, axis=1) 
+    idx = np.argsort(dist, axis=0)[:k]
+    votes = y[idx]
+    y_pred = mode(votes, axis=0)[0][0]
+    return y_pred
+
+knn_single(X, y, Xt[0], k=5)</code></pre>
+<div id="speeding-up-multiple-test-cases" class="section level2">
+<h2>Speeding Up Multiple Test Cases</h2>
+<p>Now this works well for a single test sample, but imagine being given <code>$10K$</code> test sample at once and asked to classify all of them. Running this <code>knn_single()</code> function on a loop will take forever. Is there a way to speed it up?</p>
+<p>Let’s see if we can vectorize our <code>knn</code> over multiple test samples. Given <code>m</code> source samples <code>X</code> and <code>n</code> target samples <code>Xt</code>, we want to find a vectorized way to calculate all pairwise distance between the source and the target samples. The resulting distance can be expressed by a 2d matrix <code>D[n, m]</code>. Once we have that, we can take the <code>k</code> most closest samples from the training set for each test sample and take the <code>mode</code> of the labels for our classification result.</p>
+<p>Turns out there is a simple way to do it. We all know the formula, <code>$(a-b)^2 = a^2 - 2ab + b^2$</code> right? This can be directly applied to calculate the pairwise squared distance between <code>X</code> and <code>Xt</code>. The code is shown below.</p>
+<pre class="python"><code>def knn(X, y, Xt, k=5):
+    dists = -2 * np.dot(Xt, X.T) + np.sum(X**2, axis=1).reshape(1, -1) \
+      + np.sum(Xt**2, axis=1).reshape(-1, 1)
+
+    idx = np.argsort(dists, axis=1)[:, :k]
+    votes = y[idx]
+
+    yt_pred = mode(votes, axis=1)[0]
+    return yt_pred.reshape(-1)</code></pre>
+</div>
+</div>
+
+    </div>
+  </article>
+
+  
+
+
+</main>
+
+      <footer class="footer">
+        <ul class="footer-links">
+          <li>
+            <a href="/index.xml" type="application/rss+xml" target="_blank">RSS feed</a>
+          </li>
+          <li>
+            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="/images/hugo-logo.png" alt="Img link to Hugo website" width="22" height="22"></a>
+          </li>
+        </ul>
+      </footer>
+
+    </div>
+    
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/r.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+
+
+
+    
+<script src="/js/math-code.js"></script>
+<script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+
+    
+  </body>
+</html>
+

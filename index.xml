@@ -6,7 +6,18 @@
     <description>Recent content on Random Notes!</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 15 Oct 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://azmfaridee.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 19 Oct 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://azmfaridee.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>ML Notes</title>
+      <link>https://azmfaridee.github.io/post/2020/10/19/ml-notes/</link>
+      <pubDate>Mon, 19 Oct 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://azmfaridee.github.io/post/2020/10/19/ml-notes/</guid>
+      <description>KNN From Scratch  Speeding Up Multiple Test Cases    KNN From Scratch I have often been asked to implement a KNN classifier in a few interviews so I thought I’d write down my simplest implementation on MNIST and talk about various ways we can speed it up.
+First off, import our python libraries
+import mnist import numpy as np from scipy.stats import mode from sklearn.</description>
+    </item>
+    
     <item>
       <title></title>
       <link>https://azmfaridee.github.io/about/</link>
