@@ -6,7 +6,18 @@
     <description>Recent content on Random Notes!</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 19 Oct 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://azmfaridee.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 15 Oct 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://azmfaridee.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Reading List</title>
+      <link>https://azmfaridee.github.io/post/2021/10/15/reading-list/</link>
+      <pubDate>Fri, 15 Oct 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://azmfaridee.github.io/post/2021/10/15/reading-list/</guid>
+      <description>ICML, July 2021 ICLR 2021, May 2021  Theoretical Analysis of Self-Training with Deep Networks on Unlabeled Data [paper] Read First Read Later  NeurIPS 2021 NeurIPS 2020  Unsupervised Data Augmentation for Consistency Training [paper|code]    Selected list of papers (and possible summaries) on domain adaptation, self-supervision, optimal transport, few-shot learning, generative models, adversarial models, disentanglement
+ICML, July 2021 List of papers
+ Unbalanced minibatch Optimal Transport; applications to Domain Adaptation  Sequential Domain Adaptation by Synthesizing Distributionally Robust Experts  LAMDA: Label Matching Deep Domain Adaptation Representation Subspace Distance for Domain Adaptation Regression Dataset Dynamics via Gradient Flows in Probability Space Optimizing Black-box Metrics with Iterative Example Weighting A Theory of Label Propagation for Subpopulation Shift Accuracy on the Line: on the Strong Correlation Between Out-of-Distribution and In-Distribution Generalization Aggregating From Multiple Target-Shifted Sources f-Domain Adversarial Learning: Theory and Algorithms Non-Negative Bregman Divergence Minimization for Deep Direct Density Ratio Estimation A Discriminative Technique for Multiple-Source Adaptation KD3A: Unsupervised Multi-Source Decentralized Domain Adaptation via Knowledge Distillation Zoo-Tuning: Adaptive Transfer from A Zoo of Models Self-Tuning for Data-Efficient Deep Learning Continual Learning in the Teacher-Student Setup: Impact of Task Similarity Learning Bounds for Open-Set Learning Barlow Twins: Self-Supervised Learning via Redundancy Reduction   ICLR 2021, May 2021 List of all papers</description>
+    </item>
+    
     <item>
       <title>ML Notes</title>
       <link>https://azmfaridee.github.io/post/2020/10/19/ml-notes/</link>
@@ -24,7 +35,7 @@ import mnist import numpy as np from scipy.stats import mode from sklearn.</desc
       <pubDate>Thu, 15 Oct 2020 00:00:00 +0000</pubDate>
       
       <guid>https://azmfaridee.github.io/about/</guid>
-      <description>About Me Publications  Human Activity Recognition Others  Experience Education Services   About Me I’m a final year Ph.D. candidate in Information Systems at the University of Maryland, Baltimore County. I work with Dr. Nirmalya Roy in the Mobile, Pervasive, and Sensor Computing (MPSC) Lab.
+      <description>About Me Publications  Primary Research Area Others  Experience Education Services   About Me I’m a final year Ph.D. candidate in Information Systems at the University of Maryland, Baltimore County. I work with Dr. Nirmalya Roy in the Mobile, Pervasive, and Sensor Computing (MPSC) Lab.
 My current research is focused on building scalable machine learning models that are robust against domain and category shifts with minimal-to-no extra label information.</description>
     </item>
     
